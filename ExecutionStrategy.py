@@ -4,16 +4,14 @@ ExecutionStrategy.py - defines execution strategies for the game
 class ExecutionStrategy:
   def __init__(self, beacons):
     """
-    ExecutionStrategy constructor defines list of beacons to visit, 
-
+    ExecutionStrategy constructor defines list of beacons to visit.
     """
     self.beacons = beacons
-    self.prev_beacon = None
-    self.next_beacon = beacons[0]
-    pass
+    self.currentBeaconIndex = 0
 
-  def nextPos(self, dt, prev_pos):
+  def next_beacon(self, dt, prev_pos):
     """
-    Returns the next position following the strategy's path.
+    Returns the next beacon in the strategy and updates internal state.
     """
-    pass
+    self.currentBeaconIndex = (self.currentBeaconIndex + 1) % len(self.beacons)
+    return self.beacons[self.currentBeaconIndex]
