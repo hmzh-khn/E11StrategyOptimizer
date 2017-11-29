@@ -9,7 +9,10 @@ class ExecutionStrategy:
     self.beacons = beacons
     self.currentBeaconIndex = 0
 
-  def next_beacon(self, dt, prev_pos):
+  def get_beacon(self):
+    return self.beacons[self.currentBeaconIndex]
+
+  def next_beacon(self):
     """
     Returns the next beacon in the strategy and updates internal state.
     """

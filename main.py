@@ -8,7 +8,8 @@ from Beacon import Beacon
 from Robot import Robot
 from ExecutionStrategy import ExecutionStrategy
 
-
+GREEN = (0  ,100,  0)
+WHITE = (255,255,255)
 
 def nameTBD():
   """
@@ -23,14 +24,26 @@ if __name__ == '__main__':
 
   # complete visualization - Hamzah
   pygame.init()
-  screen = pygame.display.set_mode((600, 400))
 
-  background = pygame.Surface(screen.get_size())
-  background = background.convert()
-  background.fill((250, 250, 250))  
+  # display, background size
+  screen = pygame.display.set_mode((620, 420))
+
+
+  # create beacons
+  beacon = Beacon((100,100))
+  beacon1 = Beacon((300,300))
+
+  # creates strategies
+  strat1 = ExecutionStrategy([beacon, beacon1])
+
+  # creates robots
+  robot = Robot('green', strat1)
+
+  # only one Game object allowed
+  game = Game([beacon, beacon1], [robot], screen, dt=0.1, game_length=70)
 
   while 1:
-    pygame.draw.rect(screen, (20, 150, 250), (10,40, 100, 200), 10)
-    pygame.time.wait(1000)
-    pygame.display.flip()
-    pygame.display.update()
+        pygame.time.wait(1000)
+        game.update()
+        pygame.display.flip()
+        pygame.display.update()
