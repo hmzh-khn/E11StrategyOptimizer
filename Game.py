@@ -9,22 +9,9 @@ BLACK = (0,0,0)
 WHITE = (255,255,255)
 
 LINE_THICKNESS = 2
-OUTER_BOX = (10, 10, 600, 400)
-INNER_BOX = (210, 110, 200, 200)
-
-# inner octogon
-ORTHOGON_SIDE = 50 # half of side length
-START_X = 210
-START_Y = 160
-INNER_BOX_LIST = [
-    (START_X                  , START_Y),
-    (START_X                  , START_Y + 2*ORTHOGON_SIDE),
-    (START_X +   ORTHOGON_SIDE, START_Y + 3*ORTHOGON_SIDE),
-    (START_X + 3*ORTHOGON_SIDE, START_Y + 3*ORTHOGON_SIDE),
-    (START_X + 4*ORTHOGON_SIDE, START_Y + 2*ORTHOGON_SIDE),
-    (START_X + 4*ORTHOGON_SIDE, START_Y),
-    (START_X + 3*ORTHOGON_SIDE, START_Y - ORTHOGON_SIDE),
-    (START_X +   ORTHOGON_SIDE, START_Y - ORTHOGON_SIDE)]
+OUTER_BOX = (10, 10, 700, 425)
+INNER_CIRC = (360, 222)
+CIRC_RAD = 106
 
 # Beacon radius
 BEACON_RAD = 10
@@ -52,7 +39,7 @@ class Game(pygame.sprite.Sprite):
 
     # draw the field
     pygame.draw.rect(self.screen, BLACK, OUTER_BOX, LINE_THICKNESS)
-    pygame.draw.lines(self.screen, BLACK, True, INNER_BOX_LIST, LINE_THICKNESS)
+    pygame.draw.circle(self.screen, BLACK, INNER_CIRC, CIRC_RAD, LINE_THICKNESS)
 
     # draw the beacons
     for beacon in self.beacons:
@@ -61,12 +48,12 @@ class Game(pygame.sprite.Sprite):
     for robot in self.robots:
         pygame.draw.circle(self.screen, robot.get_color(), robot.pos, ROBOT_RAD)
 
-  def step(self):
+  def is_over(self):
     """
-    Plays one step of the game and updates game state.
+    Returns whether game is over or not.
     """
-    # Skipper
-    pass
+    print("Game time - ", self.time)
+    return self.time >= self.game_len
 
   def update(self):
     """
@@ -76,21 +63,19 @@ class Game(pygame.sprite.Sprite):
 
     # draw the field
     pygame.draw.rect(self.screen, BLACK, OUTER_BOX, LINE_THICKNESS)
-    pygame.draw.lines(self.screen, BLACK, True, INNER_BOX_LIST, LINE_THICKNESS)
+    pygame.draw.circle(self.screen, BLACK, INNER_CIRC, CIRC_RAD, LINE_THICKNESS)
 
     # update robots and draw them
     for robot in self.robots:
-        robot.step(1)
+        robot.step(self.dt)
         # robot.update()
         pygame.draw.circle(self.screen, robot.get_color(), robot.pos, ROBOT_RAD)
 
     # update and draw the beacons
     for beacon in self.beacons:
-        # beacon.update()
-        # print(beacon.pos)
-        # beacon.update()
         pygame.draw.circle(self.screen, beacon.get_color(), beacon.pos, BEACON_RAD)
 
+    self.time += self.dt
 
     
 

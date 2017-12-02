@@ -6,10 +6,11 @@ from pygame.locals import *
 from random import randint
 from math import sqrt
 
-GREEN = (0  ,100,  0)
-WHITE = (255,255,255)
+GREEN  = (  0,100,0)
+YELLOW = (255,255,0)
 
-INITIAL_VELOCITY = 20 # pixels/time_unit
+# 10 pixels = 1 in
+INITIAL_VELOCITY = 126.5 # pixels/s
 CAPTURE_RADIUS = 20
 
 def vect(p0, p1):
@@ -24,7 +25,7 @@ def vect(p0, p1):
     return (qx,qy)
 
 class Robot(pygame.sprite.Sprite):
-  def __init__(self, color, strategy, pos=(randint(10, 610), randint(10, 410)), velocity=INITIAL_VELOCITY):
+  def __init__(self, color, strategy, pos, velocity=INITIAL_VELOCITY):
     """
     Robot constructor defines team color and instance of strategy class
     NOTE: set velocity to actual value
@@ -42,31 +43,20 @@ class Robot(pygame.sprite.Sprite):
     """
     Executes one step of the robot's strategy and updates game state.
     """
-
-
     # move in the current direction
+    self.vector = vect(self.pos, self.currentDest.pos)
     vx, vy = self.vector
     px, py = self.pos
     self.pos = (round(px - INITIAL_VELOCITY*vx*dt), round(py - INITIAL_VELOCITY*vy*dt))
 
     has_captured = self.capture(self.currentDest)
-    # if has_captured:
-
-    
-
-  # def update(self):
-  #   """
-  #   Update the graphics to reflect the new robot state using Pygame functionality.
-  #   """
-    
-  #   pass
 
   # return RGB value of current robot get_color
   def get_color(self):
     if self.color == 'green':
       return GREEN
-    elif self.color == 'white':
-      return WHITE
+    elif self.color == 'yellow':
+      return YELLOW
     else: 
       return None
 

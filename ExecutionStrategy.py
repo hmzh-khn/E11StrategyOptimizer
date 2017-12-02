@@ -18,3 +18,4 @@ class ExecutionStrategy:
     """
     self.currentBeaconIndex = (self.currentBeaconIndex + 1) % len(self.beacons)
     return self.beacons[self.currentBeaconIndex]
+    
