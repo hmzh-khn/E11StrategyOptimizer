@@ -10,7 +10,7 @@ GREEN  = (  0,100,0)
 YELLOW = (255,255,0)
 
 # 10 pixels = 1 in
-INITIAL_VELOCITY = 126.5 # pixels/s
+INITIAL_VELOCITY = 125 # pixels/s
 CAPTURE_RADIUS = 20
 
 def vect(p0, p1):

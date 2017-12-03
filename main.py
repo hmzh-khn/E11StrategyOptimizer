@@ -61,17 +61,29 @@ if __name__ == '__main__':
   ]
 
   # tl bl br tr
-  INNER_STRAT = [
-    beacons[7],
-    t_beacons[2],
+  INNER_STRAT_WHITE = [
     beacons[8],
     t_beacons[3],
     beacons[5],
     t_beacons[0],
     beacons[6],
-    t_beacons[1],]
+    t_beacons[1],
+    beacons[7],
+    t_beacons[2],]
 
-  OUR_STRAT = [
+  # inner loop and node 9
+  # tl bl br tr
+  INNER_STRAT9_GREEN = [
+    beacons[6],
+    beacon9,
+    beacons[7],
+    t_beacons[2],
+    beacons[8],
+    t_beacons[3],
+    beacons[5],
+    t_beacons[0],]
+
+  TSP_STRAT_GREEN = [
     beacon1,
     beacon5,
     t_beacons[3],
@@ -82,18 +94,47 @@ if __name__ == '__main__':
     beacon9,
     beacon7,
     beacon3]
-  OUR_STRAT = OUR_STRAT[::-1]
+  TSP_STRAT_GREEN = TSP_STRAT_GREEN[::-1]
+
+  OUTER_STRAT_WHITE = [
+    beacon2,
+    beacon1,
+    beacon3,
+    beacon9,
+    beacon4,
+  ]
+
+  NODE9_STATIONARY = [beacon9, Beacon((360,436))]
+
+  TSP_STRAT_NOT9_GREEN = [
+    beacon1,
+    beacon5,
+    t_beacons[3],
+    beacon6,
+    beacon2,
+    beacon4,
+    beacon8,
+    t_beacons[1],
+    beacon7,
+    beacon3]
+  TSP_STRAT_NOT9_GREEN = TSP_STRAT_NOT9_GREEN[::-1]
 
   # creates strategies
-  strat1 = ExecutionStrategy(INNER_STRAT)
-  strat2 = ExecutionStrategy(OUR_STRAT)
+  strat1 = ExecutionStrategy(INNER_STRAT_WHITE)
+  strat2 = ExecutionStrategy(TSP_STRAT_GREEN)
+  strat3 = ExecutionStrategy(OUTER_STRAT_WHITE)
+  strat4 = ExecutionStrategy(INNER_STRAT9_GREEN)
+  strat5 = ExecutionStrategy(NODE9_STATIONARY)
+  strat6 = ExecutionStrategy(TSP_STRAT_NOT9_GREEN)
 
   # creates robots
-  robot1 = Robot('yellow', strat1, (670,220))
-  robot2 = Robot('green', strat2, (40,220))
+  robot1 = Robot('yellow', strat1, (670,230))
+  robot3 = Robot('yellow', strat5, (670,210))
+
+  robot2 = Robot('green', strat6, (40,220))
 
   # only one Game object allowed
-  game = Game(beacons, [robot1, robot2], screen, dt=DT_MS/1000, game_length=GAME_LENGTH)
+  game = Game(beacons, [robot1, robot2, robot3], screen, dt=DT_MS/1000, game_length=GAME_LENGTH)
 
   while not game.is_over():
         pygame.time.wait(DT_MS)
